@@ -1,0 +1,42 @@
+#!/usr/bin/env python
+
+import rospy
+from std_msgs.msg import String
+from sofar.msg import TensorOutput
+from sofar.msg import adapter
+from sofar.msg import obj
+from sofar.msg import feature
+
+
+def callback(data): 	
+	
+	types = ['float32','string']
+	name = ['pose_2d','result']
+	
+	elements = adapter()	
+	elements.id_mod = 2
+	
+	for j in range (0,len(data.x_2d)):
+		o = obj()						
+		for i in range(0,len(name)):
+			f = feature()
+			f.name = name[i]
+			f.types = types[i]
+			if name[i] == 'pose_2d':
+				f.value.append(data.x_2d[j])
+				f.value.append(data.y_2d[j])
+			if name[i] == 'result':
+				f.value.append(data.result[j])
+			o.obj.append(f)
+		elements.adap.append(o)
+	print(elements)
+	print( )
+	
+
+def listener():    
+    rospy.Subscriber('TensorChannel', TensorOutput, callback)    
+    rospy.spin()
+
+if __name__ == '__main__':	
+	rospy.init_node('adapterTensor', anonymous=True)	
+	listener()
