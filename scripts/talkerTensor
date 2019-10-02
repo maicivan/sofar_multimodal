@@ -2,7 +2,7 @@
 
 import rospy
 from std_msgs.msg import String
-from sofar.msg import TensorOutput
+from sofar_multimodal.msg import TensorOutput
 
 
 def talker():
