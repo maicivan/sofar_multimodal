@@ -2,8 +2,8 @@
 
 import rospy
 from std_msgs.msg import String
-from sofar.msg import TrackedShapes
-from sofar.msg import TrackedShape
+from sofar_multimodal.msg import TrackedShapes
+from sofar_multimodal.msg import TrackedShape
 
 def talker():
     pub = rospy.Publisher('PittChannel', TrackedShapes, queue_size=10)

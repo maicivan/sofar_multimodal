@@ -4,10 +4,10 @@ import numpy as np
 import rospy
 from std_msgs.msg import String
 from std_msgs.msg import Float32MultiArray
-from sofar.msg import adapter
-from sofar.msg import feature
-from sofar.msg import obj
-from sofar.msg import selector_matcher
+from sofar_multimodal.msg import adapter
+from sofar_multimodal.msg import feature
+from sofar_multimodal.msg import obj
+from sofar_multimodal.msg import selector_matcher
 
 def callback(data):	
 	

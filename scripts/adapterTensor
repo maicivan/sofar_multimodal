@@ -2,10 +2,10 @@
 
 import rospy
 from std_msgs.msg import String
-from sofar.msg import TensorOutput
-from sofar.msg import adapter
-from sofar.msg import obj
-from sofar.msg import feature
+from sofar_multimodal.msg import TensorOutput
+from sofar_multimodal.msg import adapter
+from sofar_multimodal.msg import obj
+from sofar_multimodal.msg import feature
 
 
 def callback(data): 	
