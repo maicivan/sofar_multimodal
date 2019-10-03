@@ -2,13 +2,7 @@
 
 import rospy
 from std_msgs.msg import String
-from sofar_multimodal.msg import TrackedShapes
-from sofar_multimodal.msg import TrackedShape
-from sofar_multimodal.msg import adapter
-from sofar_multimodal.msg import obj
-from sofar_multimodal.msg import feature
-
-
+from sofar_multimodal.msg import *
 
 def callback(data): 
 	
@@ -37,6 +31,7 @@ def callback(data):
 				f.value.append(data.tr[j].shape_tag)
 			o.obj.append(f)
 		elements.adap.append(o)
+		
 def listener():    
     rospy.Subscriber('PittChannel', TrackedShapes, callback)    
     rospy.spin()
