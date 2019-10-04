@@ -2,7 +2,13 @@
 
 import rospy
 from std_msgs.msg import String
-from sofar_multimodal.msg import *
+from sofar_multimodal.msg import TrackedShapes
+from sofar_multimodal.msg import TrackedShape
+from sofar_multimodal.msg import adapter
+from sofar_multimodal.msg import obj
+from sofar_multimodal.msg import feature
+
+
 
 def callback(data): 
 	
@@ -31,7 +37,18 @@ def callback(data):
 				f.value.append(data.tr[j].shape_tag)
 			o.obj.append(f)
 		elements.adap.append(o)
-		
+	# print(elements)
+	# print( )
+	
+	talker(elements)
+
+def talker(elements):	
+	pub = rospy.Publisher('SelectorChannelPitt', adapter(), queue_size=10)
+	rate = rospy.Rate(30) # 10hz
+	pub.publish(elements)
+	rate.sleep()
+	
+	
 def listener():    
     rospy.Subscriber('PittChannel', TrackedShapes, callback)    
     rospy.spin()
