@@ -39,7 +39,7 @@ def callback(data):
 	
 	
 def talker(elements):	
-	pub = rospy.Publisher('SelectorChannelTensor', adapter(), queue_size=10)
+	pub = rospy.Publisher('SelectorChannelTensor', adapter, queue_size=10)
 	rate = rospy.Rate(30) # 10hz
 	pub.publish(elements)
 	rate.sleep()

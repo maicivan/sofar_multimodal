@@ -39,11 +39,11 @@ def callback(data):
 		elements.adap.append(o)
 	# print(elements)
 	# print( )
-	
+		
 	talker(elements)
 
 def talker(elements):	
-	pub = rospy.Publisher('SelectorChannelPitt', adapter(), queue_size=10)
+	pub = rospy.Publisher('SelectorChannelPitt', adapter, queue_size=10)
 	rate = rospy.Rate(30) # 10hz
 	pub.publish(elements)
 	rate.sleep()
