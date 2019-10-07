@@ -12,7 +12,7 @@ def callback(data):
 	types = ['float32','string']
 	name = ['pose_2d','result']
 	
-	global elements	
+	#global elements	
 	elements.id_mod = 2
 	
 	for j in range (0,len(data.x_2d)):
@@ -36,4 +36,5 @@ if __name__ == '__main__':
 	rate=rospy.Rate(10)
 	while not rospy.is_shutdown():
 		pub.publish(elements)
+		elements.adap[:]=[]
 		rate.sleep()
