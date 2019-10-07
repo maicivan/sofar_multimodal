@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import rospy
+import random
+import string
 from std_msgs.msg import *
 from sofar_multimodal.msg import *
 
@@ -10,10 +12,10 @@ elements = adapter()
 
 def callback(data): 
 	
-	types = ['float32','float32','string','float32[]']
-	name = ['pose_3d','pose_2d','shape_tag','c']
+	types = ['float32','float32','string','float32[]', 'string']
+	name = ['pose_3d','pose_2d','shape_tag','c', 'id']
 	
-	global elements
+	#global elements
 	elements.id_mod = 1	
 	
 	for j in range (0,len(data.tr)):
@@ -33,6 +35,9 @@ def callback(data):
 				f.value.append(data.tr[j].shape_tag)
 			if name[i] == 'c':
 				f.value.append(data.tr[j].shape_tag)
+			if name[i] == 'id':
+				id_generetor = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
+				f.value.append(id_generetor)
 			o.obj.append(f)
 		elements.adap.append(o)
 
@@ -43,5 +48,6 @@ if __name__ == '__main__':
 	rate=rospy.Rate(10)
 	while not rospy.is_shutdown():
 		pub.publish(elements)
+		elements.adap[:] = []
 		rate.sleep()
 
