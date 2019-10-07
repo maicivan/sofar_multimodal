@@ -11,12 +11,10 @@ intersect_obj = selectorMatcher()
 
 ###CALLBACKS
 def callbackPitt(adapter):
-    global started
     commonObj.common.append(adapter)
     union_objs.matcher.append(commonObj)
 
 def callbackTensor(adapter):
-    global started
     commonObj.common.append(adapter)
     union_objs.matcher.append(commonObj)
 
@@ -32,5 +30,6 @@ if __name__ == '__main__':
 	rate = rospy.Rate(10)
 	while not rospy.is_shutdown():
 		pub_union.publish(union_objs)
+		commonObj.common[:] = []
 		union_objs.matcher[:] = []
 		rate.sleep()
