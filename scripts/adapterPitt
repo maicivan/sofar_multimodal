@@ -4,12 +4,14 @@ import rospy
 from std_msgs.msg import String
 from sofar_multimodal.msg import *
 
+elements = adapter()
+
 def callback(data): 
 	
 	types = ['float32','float32','string','float32[]']
 	name = ['pose_3d','pose_2d','shape_tag','c']
 	
-	elements = adapter()	
+	global elements
 	elements.id_mod = 1	
 	
 	for j in range (0,len(data.tr)):
@@ -19,24 +21,25 @@ def callback(data):
 			f.name = name[i]
 			f.types = types[i]
 			if name[i] == 'pose_3d':
-				f.value.append(data.tr[j].x_3d)
-				f.value.append(data.tr[j].y_3d)
-				f.value.append(data.tr[j].z_3d)
+				f.value.append(str(data.tr[j].x_3d))
+				f.value.append(str(data.tr[j].y_3d))
+				f.value.append(str(data.tr[j].z_3d))
 			if name[i] == 'pose_2d':
-				f.value.append(data.tr[j].x_2d)
-				f.value.append(data.tr[j].y_2d)
+				f.value.append(str(data.tr[j].x_2d))
+				f.value.append(str(data.tr[j].y_2d))
 			if name[i] == 'shape_tag':
 				f.value.append(data.tr[j].shape_tag)
 			if name[i] == 'c':
 				f.value.append(data.tr[j].shape_tag)
 			o.obj.append(f)
 		elements.adap.append(o)
-		
-def listener():    
-    rospy.Subscriber('PittChannel', TrackedShapes, callback)    
-    rospy.spin()
 
 if __name__ == '__main__':	
-	rospy.init_node('adapterPitt', anonymous=True)	
-	listener()
+	rospy.init_node('adapterPitt', anonymous=True)
+	rospy.Subscriber('PittChannel', TrackedShapes, callback)
+	pub=rospy.Publisher('outputAdapterPitt', adapter, queue_size=1)
+	rate=rospy.Rate(10)
+	while not rospy.is_shutdown():
+		pub.publish(elements)
+		rate.sleep()
 
