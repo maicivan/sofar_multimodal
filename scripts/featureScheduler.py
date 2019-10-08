@@ -9,8 +9,8 @@ commonObj = commonFeature()
 union_objs = selectorMatcher()
 #intersect_obj = selectorMatcher()
 
-def compare(adapter, adapter):
-	if(commonObj.common.id_mod )
+""" def compare(adapter, adapter):
+	if(commonObj.common.id_mod ) """
 
 ###CALLBACKS
 def callbackPitt(adapter):
@@ -48,4 +48,4 @@ if __name__ == '__main__':
 		# pub_intersect.publish(intersect_obj)
 		# intersect_obj.matcher[:] = []
 
-		# rate.sleep()
+		rate.sleep()
