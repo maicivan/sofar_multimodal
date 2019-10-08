@@ -7,27 +7,40 @@ from sofar_multimodal.msg import *
 #ASSEGNAMENTO
 commonObj = commonFeature()
 union_objs = selectorMatcher()
-#intersect_obj = selectorMatcher()
+intersect_obj = selectorMatcher()
+buffer = []
 
-# def compare(adapter, adapter):
-# 	if(commonObj.common.id_mod )
+def compare(buffer):
+	#intersect_obj.matcher.common.id_mod
+	print ("lunghezza buffer " + str(len(buffer)))
+	for k in range(0,len(buffer)):	
+		#print (buffer[k].id_mod)
+		for j in range(1,len(buffer)):
+			#print(buffer[j]) 
+			if(buffer[k].id_mod != buffer[j].id_mod):
+				for scene in range(0,len(buffer[j].adap)):
+					#print(buffer[j].adap[scene])
+					for objects_1 in range(0,len(buffer[j].adap[scene].obj)):
+						#print(buffer[j].adap[scene].obj[objects_1])
+						for objects_2 in range(1,len(buffer[j].adap[scene].obj)):
+							if(buffer[j].adap[scene].obj[objects_1].name == buffer[j].adap[scene].obj[objects_2].name):
+								print(buffer[j].adap[scene].obj[objects_1].name)
+				#print("True")
+			else:
+				print("False")						
 
 ###CALLBACKS
 def callbackPitt(adapter):
-	##UNION
-    commonObj.common.append(adapter)
-    union_objs.matcher.append(commonObj)
-	##INTERSECT
-	#intersect_obj.matcher.append(commonObj)
+	commonObj.common.append(adapter)
+	union_objs.matcher.append(commonObj)
+	buffer.append(adapter)
 
 def callbackTensor(adapter):
-	#UNION
-    commonObj.common.append(adapter)
-    union_objs.matcher.append(commonObj)
-	#INTERSECT
+	commonObj.common.append(adapter)
+	union_objs.matcher.append(commonObj)
+	buffer.append(adapter)
 	#intersect_obj.matcher.append(commonObj)
-
-
+	
 if __name__ == '__main__':
 	rospy.loginfo("In esecuzione...")
 	rospy.init_node('selectorMatcher', anonymous=True)
@@ -41,10 +54,10 @@ if __name__ == '__main__':
 	while not rospy.is_shutdown():
 		###UNION
 		pub_union.publish(union_objs)
+		compare(buffer)
 		commonObj.common[:] = []
 		union_objs.matcher[:] = []
 		###INTERSECT -- DA FINIRE SOLO IDEA
-		# compare(adapter, adapter)
 		# pub_intersect.publish(intersect_obj)
 		# intersect_obj.matcher[:] = []
 
