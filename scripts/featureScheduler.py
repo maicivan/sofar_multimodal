@@ -9,6 +9,7 @@ commonObj = commonFeature()
 union_objs = selectorMatcher()
 intersect_obj = selectorMatcher()
 buffer = []
+intersezione = []
 
 def compare(buffer):
 	#intersect_obj.matcher.common.id_mod
@@ -26,22 +27,37 @@ def compare(buffer):
 							for objects_2 in range(0,len(buffer[j].adap[scene_2].obj)):
 								#print("obj in scene : " + str(len(buffer[j].adap[scene].obj)))
 								if(buffer[k].adap[scene].obj[objects_1].name == buffer[j].adap[scene_2].obj[objects_2].name):
-									# print("primo oggetto " + str(buffer[k].id_mod))
-									# print(buffer[k].adap[scene].obj[objects_1])
-									# print('\n')
-									# print("secondo oggetto " + str(buffer[j].id_mod))
-									# print(buffer[j].adap[scene_2].obj[objects_2])
-									# print('\n')
-									print("feature in comune")
-									print(buffer[j].adap[scene_2].obj[objects_2].name)
-									print('\n')
-									print(buffer[k].adap[scene].obj[objects_1].value)
-									print('\n')
-									print(buffer[j].adap[scene_2].obj[objects_2].value)
-									print('\n')
+								# 	print("primo oggetto " + str(buffer[k].id_mod))
+								# 	print(buffer[k].adap[scene].obj[objects_1])
+								# 	print('\n')
+								# 	print("secondo oggetto " + str(buffer[j].id_mod))
+								# 	print(buffer[j].adap[scene_2].obj[objects_2])
+								# 	print('\n')
+								# 	print("feature in comune")
+								# 	print(buffer[j].adap[scene_2].obj[objects_2].name)
+								# 	print('\n')
+								# 	print(buffer[k].adap[scene].obj[objects_1].value)
+								# 	print('\n')
+								# 	print(buffer[j].adap[scene_2].obj[objects_2].value)
+								# 	print('\n')
+									
+									if(buffer[k].adap[scene].obj[objects_1].value in intersezione):
+										intersezione.append(buffer[j].adap[scene_2].obj[objects_2].value)
+									else:
+										intersezione.append(buffer[k].adap[scene].obj[objects_1].name)
+										intersezione.append(buffer[k].adap[scene].obj[objects_1].value)
+										intersezione.append(buffer[j].adap[scene_2].obj[objects_2].value)
+
+									print(intersezione)
+									intersezione[:] = []
 			else:
-				print("False")
-				return						
+				print(j)
+				return
+		if(j == len(buffer) - 1):
+			buffer.remove(buffer[k])
+			intersezione[:] = []
+	buffer[:] = []
+	return						
 
 ###CALLBACKS
 def callbackPitt(adapter):
