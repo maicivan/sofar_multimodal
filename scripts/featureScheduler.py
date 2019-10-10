@@ -18,16 +18,30 @@ def compare(buffer):
 		for j in range(1,len(buffer)):
 			#print(buffer[j]) 
 			if(buffer[k].id_mod != buffer[j].id_mod):
-				for scene in range(0,len(buffer[j].adap)):
+				for scene in range(0,len(buffer[k].adap)):
 					#print(buffer[j].adap[scene])
-					for objects_1 in range(0,len(buffer[j].adap[scene].obj)):
+					for objects_1 in range(0,len(buffer[k].adap[scene].obj)):
 						#print(buffer[j].adap[scene].obj[objects_1])
-						for objects_2 in range(1,len(buffer[j].adap[scene].obj)):
-							if(buffer[j].adap[scene].obj[objects_1].name == buffer[j].adap[scene].obj[objects_2].name):
-								print(buffer[j].adap[scene].obj[objects_1].name)
-				#print("True")
+						for scene_2 in range(0,len(buffer[j].adap)):
+							for objects_2 in range(0,len(buffer[j].adap[scene_2].obj)):
+								#print("obj in scene : " + str(len(buffer[j].adap[scene].obj)))
+								if(buffer[k].adap[scene].obj[objects_1].name == buffer[j].adap[scene_2].obj[objects_2].name):
+									# print("primo oggetto " + str(buffer[k].id_mod))
+									# print(buffer[k].adap[scene].obj[objects_1])
+									# print('\n')
+									# print("secondo oggetto " + str(buffer[j].id_mod))
+									# print(buffer[j].adap[scene_2].obj[objects_2])
+									# print('\n')
+									print("feature in comune")
+									print(buffer[j].adap[scene_2].obj[objects_2].name)
+									print('\n')
+									print(buffer[k].adap[scene].obj[objects_1].value)
+									print('\n')
+									print(buffer[j].adap[scene_2].obj[objects_2].value)
+									print('\n')
 			else:
-				print("False")						
+				print("False")
+				return						
 
 ###CALLBACKS
 def callbackPitt(adapter):
