@@ -10,13 +10,15 @@ union_objs = selectorMatcher()
 intersect_obj = selectorMatcher()
 buffer = []
 intersezione = []
+j=0
 
 def compare(buffer):
 	#intersect_obj.matcher.common.id_mod
 	print ("lunghezza buffer " + str(len(buffer)))
+	# endLoop = len(buffer)
 	for k in range(0,len(buffer)):	
 		#print (buffer[k].id_mod)
-		for j in range(1,len(buffer)):
+		for j in range(k+1,len(buffer)):
 			#print(buffer[j]) 
 			if(buffer[k].id_mod != buffer[j].id_mod):
 				for scene in range(0,len(buffer[k].adap)):
@@ -40,22 +42,18 @@ def compare(buffer):
 								# 	print('\n')
 								# 	print(buffer[j].adap[scene_2].obj[objects_2].value)
 								# 	print('\n')
-									
+								#	print(buffer[k].adap[scene].obj[objects_1].value)
+							
 									if(buffer[k].adap[scene].obj[objects_1].value in intersezione):
-										intersezione.append(buffer[j].adap[scene_2].obj[objects_2].value)
+										intersezione.append(str(buffer[j].adap[scene_2].obj[objects_2].value))
 									else:
-										intersezione.append(buffer[k].adap[scene].obj[objects_1].name)
-										intersezione.append(buffer[k].adap[scene].obj[objects_1].value)
-										intersezione.append(buffer[j].adap[scene_2].obj[objects_2].value)
-
-									print(intersezione)
-									intersezione[:] = []
-			else:
-				print(j)
-				return
-		if(j == len(buffer) - 1):
-			buffer.remove(buffer[k])
-			intersezione[:] = []
+										intersezione.append(str(buffer[k].adap[scene].obj[objects_1].name))
+										intersezione.append(str(buffer[k].adap[scene].obj[objects_1].value))
+										intersezione.append(str(buffer[j].adap[scene_2].obj[objects_2].value))
+				print(intersezione)
+				pub_intersect.publish(intersezione)
+				intersezione[:] = []
+		intersezione[:] = []
 	buffer[:] = []
 	return						
 
@@ -69,7 +67,7 @@ def callbackTensor(adapter):
 	commonObj.common.append(adapter)
 	union_objs.matcher.append(commonObj)
 	buffer.append(adapter)
-	#intersect_obj.matcher.append(commonObj)
+	# intersect_obj.matcher.append(commonObj)
 	
 if __name__ == '__main__':
 	rospy.loginfo("In esecuzione...")
@@ -78,7 +76,7 @@ if __name__ == '__main__':
 	rospy.Subscriber('outputAdapterPitt', adapter, callbackPitt)
 	rospy.Subscriber('outputAdapterTensor', adapter, callbackTensor)
 	###PUBLISHERS
-	pub_intersect = rospy.Publisher('/featureScheduler/pubIntersection', selectorMatcher, queue_size=10)
+	pub_intersect = rospy.Publisher('/featureScheduler/pubIntersection', intersect_msg, queue_size=10)
 	pub_union = rospy.Publisher('/featureScheduler/pubUnion', selectorMatcher, queue_size=10)
 	rate = rospy.Rate(10)
 	while not rospy.is_shutdown():
