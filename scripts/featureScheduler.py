@@ -5,17 +5,17 @@ from std_msgs.msg import *
 from sofar_multimodal.msg import *
 
 #ASSEGNAMENTO
+buffer = []
+intersection = intersectFeatures()
+j=0
 commonObj = commonFeature()
 union_objs = selectorMatcher()
-intersect_obj = selectorMatcher()
-buffer = []
-intersezione = []
-j=0
+intersect_obj = intersect_msg()
+temp_name =''
 
 def compare(buffer):
-	#intersect_obj.matcher.common.id_mod
+	global intersection, temp_name, intersect_obj
 	print ("lunghezza buffer " + str(len(buffer)))
-	# endLoop = len(buffer)
 	for k in range(0,len(buffer)):	
 		#print (buffer[k].id_mod)
 		for j in range(k+1,len(buffer)):
@@ -29,31 +29,24 @@ def compare(buffer):
 							for objects_2 in range(0,len(buffer[j].adap[scene_2].obj)):
 								#print("obj in scene : " + str(len(buffer[j].adap[scene].obj)))
 								if(buffer[k].adap[scene].obj[objects_1].name == buffer[j].adap[scene_2].obj[objects_2].name):
-								# 	print("primo oggetto " + str(buffer[k].id_mod))
-								# 	print(buffer[k].adap[scene].obj[objects_1])
-								# 	print('\n')
-								# 	print("secondo oggetto " + str(buffer[j].id_mod))
-								# 	print(buffer[j].adap[scene_2].obj[objects_2])
-								# 	print('\n')
-								# 	print("feature in comune")
-								# 	print(buffer[j].adap[scene_2].obj[objects_2].name)
-								# 	print('\n')
-								# 	print(buffer[k].adap[scene].obj[objects_1].value)
-								# 	print('\n')
-								# 	print(buffer[j].adap[scene_2].obj[objects_2].value)
-								# 	print('\n')
-								#	print(buffer[k].adap[scene].obj[objects_1].value)
-							
-									if(buffer[k].adap[scene].obj[objects_1].value in intersezione):
-										intersezione.append(str(buffer[j].adap[scene_2].obj[objects_2].value))
+									if(buffer[k].adap[scene].obj[objects_1].value in intersection.value):
+										intersection.value.append(buffer[j].adap[scene_2].obj[objects_2].value)
 									else:
-										intersezione.append(str(buffer[k].adap[scene].obj[objects_1].name))
-										intersezione.append(str(buffer[k].adap[scene].obj[objects_1].value))
-										intersezione.append(str(buffer[j].adap[scene_2].obj[objects_2].value))
-				print(intersezione)
-				pub_intersect.publish(intersezione)
-				intersezione[:] = []
-		intersezione[:] = []
+										if(temp_name != buffer[j].adap[scene_2].obj[objects_2].name):
+											print(intersection)
+
+											intersect_obj.intersezione.append(intersection)
+											pub_intersect.publish(intersect_obj)
+											##RESET LIST
+											intersection = intersectFeatures()
+											intersect_obj = intersect_msg()
+
+											temp_name = buffer[j].adap[scene_2].obj[objects_2].name
+											intersection.name = buffer[k].adap[scene].obj[objects_1].name
+											intersection.value.append(buffer[k].adap[scene].obj[objects_1].value)
+											intersection.value.append(buffer[j].adap[scene_2].obj[objects_2].value)
+										else:
+											intersection.value.append(buffer[j].adap[scene_2].obj[objects_2].value)
 	buffer[:] = []
 	return						
 

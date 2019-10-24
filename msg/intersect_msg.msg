@@ -1,1 +1,1 @@
-string[] intersezione
+intersectFeatures[] intersezione
