@@ -11,10 +11,12 @@ j=0
 commonObj = commonFeature()
 union_objs = selectorMatcher()
 intersect_obj = intersect_msg()
+values = stringValue()
+VALUE = stringValue()
 temp_name =''
 
 def compare(buffer):
-	global intersection, temp_name, intersect_obj
+	global intersection, temp_name, intersect_obj, values
 	print ("lunghezza buffer " + str(len(buffer)))
 	for k in range(0,len(buffer)):	
 		#print (buffer[k].id_mod)
@@ -29,24 +31,42 @@ def compare(buffer):
 							for objects_2 in range(0,len(buffer[j].adap[scene_2].obj)):
 								#print("obj in scene : " + str(len(buffer[j].adap[scene].obj)))
 								if(buffer[k].adap[scene].obj[objects_1].name == buffer[j].adap[scene_2].obj[objects_2].name):
-									if(buffer[k].adap[scene].obj[objects_1].value in intersection.value):
-										intersection.value.append(buffer[j].adap[scene_2].obj[objects_2].value)
+									#if(buffer[k].adap[scene].obj[objects_1].value in intersection.value.arrayValue):
+									if(buffer[k].adap[scene].obj[objects_1].value in values.arrayValue):
+										for valore in range(0,len(buffer[j].adap[scene_2].obj[objects_2].value)):
+											values.arrayValue.append(buffer[j].adap[scene_2].obj[objects_2].value[valore])
+										intersection.value.append(values)
+										values = stringValue()
 									else:
 										if(temp_name != buffer[j].adap[scene_2].obj[objects_2].name):
 											print(intersection)
-
+											
 											intersect_obj.intersezione.append(intersection)
 											pub_intersect.publish(intersect_obj)
 											##RESET LIST
 											intersection = intersectFeatures()
 											intersect_obj = intersect_msg()
+											values = stringValue()
 
 											temp_name = buffer[j].adap[scene_2].obj[objects_2].name
 											intersection.name = buffer[k].adap[scene].obj[objects_1].name
-											intersection.value.append(buffer[k].adap[scene].obj[objects_1].value)
-											intersection.value.append(buffer[j].adap[scene_2].obj[objects_2].value)
+
+											for valore in range(0,len(buffer[j].adap[scene_2].obj[objects_2].value)):
+												values.arrayValue.append(buffer[k].adap[scene].obj[objects_1].value[valore])
+											intersection.value.append(values)
+											values = stringValue()
+
+											for valore in range(0,len(buffer[j].adap[scene_2].obj[objects_2].value)):
+												values.arrayValue.append(buffer[j].adap[scene_2].obj[objects_2].value[valore])
+											intersection.value.append(values)
+											values = stringValue()
 										else:
-											intersection.value.append(buffer[j].adap[scene_2].obj[objects_2].value)
+											for valore in range(0,len(buffer[j].adap[scene_2].obj[objects_2].value)):
+												values.arrayValue.append(buffer[j].adap[scene_2].obj[objects_2].value[valore])
+											intersection.value.append(values)
+											values = stringValue()
+						# pub_intersect.publish(intersect_obj)
+						# intersect_obj = intersect_msg()
 	buffer[:] = []
 	return						
 

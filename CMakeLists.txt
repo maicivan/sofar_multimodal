@@ -26,7 +26,8 @@ find_package(catkin REQUIRED COMPONENTS
     commonFeature.msg
     selectorMatcher.msg
     intersect_msg.msg 
-    intersectFeatures.msg        
+    intersectFeatures.msg 
+    stringValue.msg       
   )
 
 ## Generate added messages and services with any dependencies listed here
