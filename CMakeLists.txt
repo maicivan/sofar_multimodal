@@ -25,7 +25,9 @@ find_package(catkin REQUIRED COMPONENTS
     TensorOutput.msg
     commonFeature.msg
     selectorMatcher.msg
-    unionMsg.msg         
+    #unionMsg.msg 
+	record.msg
+	outputReasoner.msg        
   )
 
 ## Generate added messages and services with any dependencies listed here
