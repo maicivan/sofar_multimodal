@@ -5,7 +5,7 @@ from std_msgs.msg import *
 from sofar_multimodal.msg import *
 
 #ASSEGNAMENTO
-buffer = []
+buffer = commonFeature()
 intersection = intersectFeatures()
 j=0
 commonObj = commonFeature()
@@ -23,60 +23,64 @@ name_common = []
 def compare(buffer):
 	global common_feature, name_common
 	name_common_mem = []
-	print("-----------------------" + str(buffer))
-	if(len(buffer)>1):
-		for k in range(0,len(buffer)):
-			for j in range(k+1,len(buffer)):
+	interse.matcher[:] = []
+	if(len(buffer.common)>1):
+		for k in range(0,len(buffer.common)):
+			for j in range(k+1,len(buffer.common)):
 
-				for oggetto in range(0,len(buffer[k].adap)):
-					for feature in range(0, len(buffer[k].adap[oggetto].obj)):
-						for feature_2 in range(0, len(buffer[j].adap[0].obj)):
-							if(buffer[k].adap[oggetto].obj[feature].name ==  buffer[j].adap[0].obj[feature_2].name):
+				for oggetto in range(0,len(buffer.common[k].adap)):
+					for feature in range(0, len(buffer.common[k].adap[oggetto].obj)):
+						for feature_2 in range(0, len(buffer.common[j].adap[0].obj)):
+							if(buffer.common[k].adap[oggetto].obj[feature].name ==  buffer.common[j].adap[0].obj[feature_2].name):
 								common_feature.append(feature)
 
 	
-					for feature in range(len(buffer[k].adap[oggetto].obj)-1,-1,-1):
-						print("valore feature: "+ str(feature))
-						for f in  range(len(common_feature)-1,-1, -1):
-							if(feature==common_feature[f]):
-								print("Da salvare: \n"+str(common_feature[f]))
-								name_common.append(buffer[k].adap[oggetto].obj[feature].name)
-								print("guarada quiyiewhsihbfluy\n"+ str(name_common))
-								del(common_feature[f])
-								break
-							del(buffer[k].adap[oggetto].obj[feature])
+					for feature in range(len(buffer.common[k].adap[oggetto].obj)-1,-1,-1):
+						if common_feature:
+							if(feature==common_feature[-1]):
+								name_common.append(buffer.common[k].adap[oggetto].obj[feature].name)
+								common_feature.pop()
+							else:
+								del(buffer.common[k].adap[oggetto].obj[feature])
+						else:
+							del(buffer.common[k].adap[oggetto].obj[feature])
 					name_common_mem = list(name_common)
 					name_common[:]=[]
 
-				for oggetto in range(0,len(buffer[j].adap)):
-					for feature in range(len(buffer[j].adap[oggetto].obj)-1,-1,-1):
-						print("valore feature2: "+ str(feature))
-						#for n in  range(len(name_common)-1,-1, -1):
-
-						print(len(buffer[j].adap[oggetto].obj)-1)
-						print(buffer[j].adap[oggetto].obj[feature])
-						print("culo")
-						print(name_common_mem)
-						if(buffer[j].adap[oggetto].obj[feature].name == name_common_mem[-1]):
-							print("Da salvare ground: \n"+str(name_common_mem[-1]))
-							#del(name_common_mem[len(name_common_mem)-1])
-							name_common_mem.pop()
+				for oggetto in range(0,len(buffer.common[j].adap)):
+					name_temp = list(name_common_mem)
+					for feature in range(len(buffer.common[j].adap[oggetto].obj)-1,-1,-1):
+						if name_temp:
+							if(buffer.common[j].adap[oggetto].obj[feature].name == name_temp[0]):
+								del(name_temp[0])
+							else:
+								del(buffer.common[j].adap[oggetto].obj[feature])
 						else:
-							del(buffer[j].adap[oggetto].obj[feature])
-						if not name_common_mem:
-							break
-		common_feature[:] = []
+							del(buffer.common[j].adap[oggetto].obj[feature])
+	
+				print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"+str(buffer))
+				interse.matcher.append(buffer)			
+				pub_intersect.publish(interse)
+				# confronto.common[:] = []
+				# confronto.common.append(buffer.common[k])
+				# confronto.common.append(buffer.common[j])
+				# interse.matcher.append(confronto)
+				
+
+		# interse.matcher.append(buffer)			
+		# pub_intersect.publish(interse)
+
 
 			
-		print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"+str(buffer))
+		#print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"+str(buffer))
 		
 
 def checkNewValue(value, buffer):
-	for k in range(0,len(buffer)):
-		if(value.id_mod == buffer[k].id_mod):
-			buffer[k] = value
+	for k in range(0,len(buffer.common)):
+		if(value.id_mod == buffer.common[k].id_mod):
+			buffer.common[k] = value
 			return
-	buffer.append(value)
+	buffer.common.append(value)
 	
 
 ###CALLBACKS
