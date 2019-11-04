@@ -29,7 +29,8 @@ def callback(data):
 			if name[i] == 'result':
 				f.value.append(data.result[j])
 			if name[i] == 'id':
-				id_generetor = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
+				#id_generetor = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
+				id_generetor =str(random.uniform(10,100))
 				f.value.append(id_generetor)
 			o.obj.append(f)
 		elements.adap.append(o)

@@ -36,7 +36,8 @@ def callback(data):
 			if name[i] == 'c':
 				f.value.append(data.tr[j].shape_tag)
 			if name[i] == 'id':
-				id_generetor = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
+				#id_generetor = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
+				id_generetor =str(random.uniform(10,100))
 				f.value.append(id_generetor)
 			o.obj.append(f)
 		elements.adap.append(o)
@@ -45,7 +46,7 @@ if __name__ == '__main__':
 	rospy.init_node('adapterPitt', anonymous=True)
 	rospy.Subscriber('PittChannel', TrackedShapes, callback)
 	pub=rospy.Publisher('outputAdapterPitt', adapter, queue_size=1)
-	rate=rospy.Rate(10)
+	rate=rospy.Rate(20)
 	while not rospy.is_shutdown():
 		pub.publish(elements)
 		elements.adap[:] = []
