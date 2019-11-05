@@ -25,8 +25,10 @@ find_package(catkin REQUIRED COMPONENTS
     TensorOutput.msg
     commonFeature.msg
     selectorMatcher.msg
-	  record.msg
-	  outputReasoner.msg        
+	record.msg
+	outputReasoner.msg        
+	corr.msg
+	correlationTable.msg
     intersect_msg.msg 
     intersectFeatures.msg 
     stringValue.msg       
