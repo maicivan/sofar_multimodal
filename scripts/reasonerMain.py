@@ -1,15 +1,11 @@
 #!/usr/bin/env python
 
+#Author: Baldassarre Nicolò, Panzera Matteo, Rusconi Andrea
+
 import rospy
 from os import system
 from std_msgs.msg import String
-from sofar_multimodal.msg import outputReasoner, record
-
-# Talker che pubblica le collezioni di oggetti virtuali che corrispondono ad un oggetto reale con un certo indice di correlazione
-def talker(output):
-    pub = rospy.Publisher('reasoner_output', outputReasoner, queue_size=10)     # Il talker pubblica sul topic reasoner_output
-    rospy.init_node('reasonerMain', anonymous=True)
-    pub.publish(output)
+from sofar_multimodal.msg import *
 
 # Funzione invocata all'arrivo dei messaggi dal Correlation Table Manager
 def callback(data):
@@ -127,18 +123,15 @@ def callback(data):
             record_line.rec.append(str(records[i][j]))
         record_line.corr = records[i][len(records[i])-1]
         output.lines.append(record_line)
+    pub = rospy.Publisher('reasoner_output', outputReasoner, queue_size=10)     # Il talker pubblica sul topic reasoner_output
+    pub.publish(output)
 
-    # Chiamata al talker
-    if __name__ == '__main__':
-        try:
-            talker(output)
-        except rospy.ROSInterruptException:
-            pass
 
 # Listener che ascolta i messaggi pubblicati dal Correlation Table Manager sul topic correlationTables
 def listener():
         rospy.init_node('reasonerMain', anonymous=True)
         rospy.Subscriber('correlationTables', String, callback)
+        rospy.Publisher
         rospy.spin()
 
 # Chiamata al listener
