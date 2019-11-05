@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-#Author: Baldassarre Nicolò, Panzera Matteo, Rusconi Andrea
+#Author: Baldassarre Nicolo', Panzera Matteo, Rusconi Andrea
 
 import rospy
 from os import system
@@ -9,22 +9,21 @@ from sofar_multimodal.msg import *
 
 # Funzione invocata all'arrivo dei messaggi dal Correlation Table Manager
 def callback(data):
-    #Ricevo i dati
+    # Inizializzo l'array dei records (che corrispondono ai vari confronti)
     records = []
-    result = data.data
-    records_splitted = result.split()
-    i = 0
-    while i < len(records_splitted):
-        record_line = []
-        record_line.append(records_splitted[i])
-        record_line.append(records_splitted[i+1])
-        record_line.append(float(records_splitted[i+2]))
-        records.append(record_line)
-        i = i+3
 
-    i = 0
+    # Ricevo i dati e costruisco i records
+    for i in range(len(data.table)):
+        record_line = []
+        record_line.append(data.table[i].first_percepted_object)
+        record_line.append(data.table[i].second_percepted_object)
+        record_line.append(data.table[i].correlation)
+        records.append(record_line)
+    
+    # Inizializzo l'array che conterra' tutti gli oggetti percepiti presenti sulla scena
     objects = []
 
+    i = 0
     # Controllo per righe (prima colonna dell'array)
     while i < len(records):
         if not objects.__contains__(records[i][0]):
@@ -66,7 +65,7 @@ def callback(data):
             j += 1
         i += 1
                 
-    ##Calcolo correlazione minima
+    # Calcolo correlazione minima
     i = 0
     while i < len(records):
         correlations = []
@@ -88,7 +87,8 @@ def callback(data):
         records[i].append(min)
         i+=1
     
-    # Gestione eccezioni
+    # GESTIONE ECCEZIONI
+    # Eccezione 1: in una collezione è presente più di un oggetto rilevato dallo stesso modulo percettivo
     i = 0
     for i in range(len(records)):
         j = 0
@@ -99,7 +99,7 @@ def callback(data):
             else:
                 rospy.logerr("Errore: due oggetti del modulo percettivo " + records[i][j][0] + " sembrano essere correlati")
         
-    # Aggiunta degli oggetti riconosciuti ma non correlati a nessun altro oggetto
+    # Eccezione 2: aggiunta degli oggetti riconosciuti in più da un solo modulo percettivo ma non correlati a nessun altro oggetto
     i = 0
     for i in range(len(records)):
         for j in range(len(records[i])-1):
@@ -130,7 +130,7 @@ def callback(data):
 # Listener che ascolta i messaggi pubblicati dal Correlation Table Manager sul topic correlationTables
 def listener():
         rospy.init_node('reasonerMain', anonymous=True)
-        rospy.Subscriber('correlationTables', String, callback)
+        rospy.Subscriber('correlationTables', correlationTable, callback)
         rospy.Publisher
         rospy.spin()
 

@@ -1,3 +1,3 @@
-string first_perceptive_module
-string second_perceptive_module
+string first_percepted_object
+string second_percepted_object
 float32 correlation
