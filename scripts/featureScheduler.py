@@ -25,6 +25,7 @@ def compare(copia_buf):
 	buffer = copia_buf
 	name_common_mem = []
 	interse.matcher[:] = []
+	union_objs.matcher[:] = []
 	if(len(buffer.common)>1):
 		for k in range(0,len(buffer.common)):
 			for j in range(k+1,len(buffer.common)):
@@ -67,9 +68,13 @@ def compare(copia_buf):
 				#interse.matcher.append(buffer)			
 				#pub_intersect.publish(interse)
 				confronto.common[:] = []
+				commonObj.common[:] = []
 				confronto.common.append(buffer.common[k])
 				confronto.common.append(buffer.common[j])
+				commonObj.common.append(copia_buf.common[k])
+				commonObj.common.append(copia_buf.common[j])
 				interse.matcher.append(confronto)
+				union_objs.matcher.append(commonObj)
 				
 
 		# interse.matcher.append(buffer)
@@ -78,6 +83,7 @@ def compare(copia_buf):
 		elif not (interse.matcher[0].common[0].adap[0]):
 			return
 		pub_intersect.publish(interse)
+		pub_union.publish(union_objs)
 			
 		#print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"+str(buffer))
 		
@@ -92,13 +98,9 @@ def checkNewValue(value, buffer):
 
 ###CALLBACKS
 def callbackPitt(adapter):
-	commonObj.common.append(adapter)
-	union_objs.matcher.append(commonObj)
 	checkNewValue(adapter, copia_buf)
 
 def callbackTensor(adapter):
-	commonObj.common.append(adapter)
-	union_objs.matcher.append(commonObj)
 	checkNewValue(adapter,copia_buf)
 
 	
@@ -111,13 +113,10 @@ if __name__ == '__main__':
 	###PUBLISHERS
 	pub_intersect = rospy.Publisher('/featureScheduler/pubIntersection', selectorMatcher, queue_size=10)
 	pub_union = rospy.Publisher('/featureScheduler/pubUnion', selectorMatcher, queue_size=10)
-	rate = rospy.Rate(1)
+	rate = rospy.Rate(10)
 	while not rospy.is_shutdown():
 		###UNION
-		pub_union.publish(union_objs)
 		compare(copia_buf)
-		commonObj.common[:] = []
-		union_objs.matcher[:] = []
 		###INTERSECT -- DA FINIRE SOLO IDEA
 		# pub_intersect.publish(intersect_obj)
 		# intersect_obj.matcher[:] = []
