@@ -6,42 +6,42 @@ from sofar_multimodal.msg import *
 #ASSEGNAMENTO 
 reasoner_out = outputReasoner()
 selector_out = selectorMatcher()
+obj_list = obj()
 
-#union_objs = unionMsg()
-#ID_objs = 1                 ### NON HO IL DATO - da modificare con il tipo di dato che esce dal REASONER
-#obj_readed = obj()         #lista feature per ogni ogni oggetto
-#obj_list = matcher()       #lista di oggetti riconosciuti, in uscita al talker
 
-def matcherFunction(selector_out, reasoner_out):
-    s_out = selector_out
+def matcherFunction(obj_list, reasoner_out):
     r_out = reasoner_out
-    selector_out.matcher[:] = []
-    #print("sei fantastica")
+    for linea in r_out.lines:
+        for ogg_reas in r_out.lines[linea].rec:
+            for ogg_lista in obj_list.obj:
+                for caratteristica in ogg_lista:
+                    if(caratteristica == 'id'):
+                        if (ogg_reas[1:] == modulo):
+                            #crea una lista da aggiungere le features degli oggetti trovati
+                            #cancella l'oggetto dalla lista
+            #fai l'append sulla variabile di output (da creare ancora)
+    #fai il pubblish della variabile di output
+
 
 #CALLBACKS
 def callbackSelector(selectorMatcher):
-    selector_out.matcher.append(selectorMatcher)
-    print("selector")
+    for moduli in selectorMatcher.matcher:
+        for scene in moduli.common:
+            for oggetti in scene.adap:
+                obj_list.obj.append(oggetti)
+    
+
+    #selector_out.matcher.append(selectorMatcher)
+    print("eccomiiiiiiiiiiiiiiiiiiiiiiii+kjflbsdkjhgsdclkjjhdscjhasjhh jvsadyggtusdcygu")
+    print(obj_list)
     
 
 def callbackReasoner(outputReasoner):
     reasoner_out = outputReasoner
-    matcherFunction(selector_out,reasoner_out)
-    print("reasoner")
+    matcherFunction(obj_list,reasoner_out)
+    #print(reasoner_out)
 
     # print(reasoner_out.lines[0].rec[0][1:len(reasoner_out.lines[0].rec[0])])
-
-
-    ###letti gli id devo cercare dentro ad union_objs tutti i corrispettivi oggetti
-    #global started, union_objs, obj_list
-    #for IDs in id_names:
-    #   for ID in IDs:
-    #       for obj in union_objs:
-    #           if(ID == obj.union_objs.identifier):  ###da rivedere perche deve essere creato come campo
-    #               obj_readed.obj.append(union_objs.union_objs[i])
-    #   obj_list.obj_list.append(obj_readed)
-    #   obj_readed.obj[:]=[]
-    
  
 	 
 if __name__ == '__main__':
@@ -50,7 +50,7 @@ if __name__ == '__main__':
 	###SUBSCRIBERS
 	sub_pitt = rospy.Subscriber('reasoner_output', outputReasoner, callbackReasoner)
 	sub_tensor = rospy.Subscriber('/featureScheduler/pubUnion', selectorMatcher, callbackSelector)
-	###PUBLISHERS
+	###PUBLISHER
 	pub_results = rospy.Publisher('/featureMatcher/dataPub', matcher, queue_size=10)
 	rate = rospy.Rate(10)
 	while not rospy.is_shutdown():
