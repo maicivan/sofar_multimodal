@@ -30,8 +30,9 @@ def callback(data):
 				f.value.append(data.result[j])
 			if name[i] == 'id':
 				#id_generetor =str(random.uniform(10,100))
-				id_generetor = str(j+10)
-				f.value.append(id_generetor)
+				#f.value.append(id_generetor)
+				id_generetor = str(j+2)
+				f.value = id_generetor
 			o.obj.append(f)
 		elements.adap.append(o)
 

@@ -27,10 +27,7 @@ find_package(catkin REQUIRED COMPONENTS
     selectorMatcher.msg
 	  record.msg
 	  outputReasoner.msg        
-    intersect_msg.msg 
-    intersectFeatures.msg 
-    stringValue.msg
-    matcher.msg       
+    matcherObj.msg     
   )
 
 ## Generate added messages and services with any dependencies listed here

@@ -6,30 +6,29 @@ from sofar_multimodal.msg import *
 
 #ASSEGNAMENTO
 copia_buf = commonFeature()
-intersection = intersectFeatures()
-j=0
 commonObj = commonFeature()
 union_objs = selectorMatcher()
 confronto = commonFeature()
-interse = selectorMatcher()
-intersect_obj = intersect_msg()
-values = stringValue()
-VALUE = stringValue()
-temp_name =''
-
+output = selectorMatcher()
 common_feature = []
 name_common = []
 
-def compare(copia_buf):
+def compare(buffer):
 	global common_feature, name_common
-	buffer = copia_buf
 	name_common_mem = []
-	interse.matcher[:] = []
+	output.matcher[:] = []
 	union_objs.matcher[:] = []
 	if(len(buffer.common)>1):
 		for k in range(0,len(buffer.common)):
 			for j in range(k+1,len(buffer.common)):
+				commonObj.common[:] = []
+				commonObj.common.append(buffer.common[k])
+				commonObj.common.append(buffer.common[j])
+				union_objs.matcher.append(commonObj)
+		pub_union.publish(union_objs)
 
+		for k in range(0,len(buffer.common)):
+			for j in range(k+1,len(buffer.common)):
 				for oggetto in range(0,len(buffer.common[k].adap)):
 					if not (buffer.common[k].adap):
 						return
@@ -64,30 +63,17 @@ def compare(copia_buf):
 						else:
 							del(buffer.common[j].adap[oggetto].obj[feature])
 	
-				#print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"+str(buffer))
-				#interse.matcher.append(buffer)			
-				#pub_intersect.publish(interse)
 				confronto.common[:] = []
-				commonObj.common[:] = []
 				confronto.common.append(buffer.common[k])
 				confronto.common.append(buffer.common[j])
-				commonObj.common.append(copia_buf.common[k])
-				commonObj.common.append(copia_buf.common[j])
-				interse.matcher.append(confronto)
-				union_objs.matcher.append(commonObj)
-				
+				output.matcher.append(confronto)				
 
-		# interse.matcher.append(buffer)
-		if not (interse.matcher[0].common[0].adap):
+		if not (output.matcher[0].common[0].adap):
 			return
-		elif not (interse.matcher[0].common[0].adap[0]):
+		elif not (output.matcher[0].common[0].adap[0]):
 			return
-		pub_intersect.publish(interse)
-		pub_union.publish(union_objs)
-			
-		#print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"+str(buffer))
-		
-
+		pub_intersect.publish(output)
+					
 def checkNewValue(value, buffer):
 	for k in range(0,len(buffer.common)):
 		if(value.id_mod == buffer.common[k].id_mod):
@@ -115,17 +101,6 @@ if __name__ == '__main__':
 	pub_union = rospy.Publisher('/featureScheduler/pubUnion', selectorMatcher, queue_size=10)
 	rate = rospy.Rate(10)
 	while not rospy.is_shutdown():
-		###UNION
 		compare(copia_buf)
-		###INTERSECT -- DA FINIRE SOLO IDEA
-		# pub_intersect.publish(intersect_obj)
-		# intersect_obj.matcher[:] = []
 
 		rate.sleep()
-
-
-
-### controllo sul buffer nel caso di un solo elemento 
-### tag sensore percettivo  tempo di validita dato
-### ros.timenow
-### time-stamp tensor question 

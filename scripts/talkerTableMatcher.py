@@ -5,8 +5,8 @@ from std_msgs.msg import String
 
 def dummyTalker():
     pub = rospy.Publisher('correlationTables', String, queue_size=10)
-    corr = [["10", "22" , 0], ["11", "21" , 1],["11", "20" , 0], ["10", "21" , 0],
-            ["10", "20" , 1],["11", "22" , 1]]
+    corr = [["10", "24" , 0], ["11", "23" , 1],["11", "22" , 0], ["10", "23" , 0],
+            ["10", "22" , 1],["11", "24" , 1]]
     rospy.init_node('dummyTalker', anonymous=True)
     rate = rospy.Rate(10) # 10hz
     corr_msg1 = ""
