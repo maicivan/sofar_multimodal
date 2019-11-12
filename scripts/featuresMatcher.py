@@ -3,10 +3,31 @@ from std_msgs.msg import *
 from sofar_multimodal.msg import *
 
 #ASSEGNAMENTO 
+<<<<<<< Updated upstream
 union_objs = unionMsg()
 ID_objs = 1                 ### NON HO IL DATO - da modificare con il tipo di dato che esce dal REASONER
 obj_readed = obj()         #lista feature per ogni ogni oggetto
 obj_list = matcher()       #lista di oggetti riconosciuti, in uscita al talker
+=======
+reasoner_out = outputReasoner()
+selector_out = selectorMatcher()
+obj_list = adapter()
+obj_list.id_mod = 90 #the most frightening
+matcher = matcherObj()
+
+def matcherFunction(obj_list, r_out):
+    for linea in r_out.lines:
+        matcher.sameObj[:] = []
+        matcher.correlation = linea.corr
+        for ogg_reas in linea.rec:
+            for ogg_lista in obj_list.adap:
+                for caratteristica in ogg_lista.obj:
+                    if (caratteristica.name == 'id'):
+                        if (str(ogg_reas[1:]) == str(caratteristica.value[0])):
+                            matcher.sameObj.append(ogg_lista)                           # crea una lista di oggetti corrispondetnti
+                            obj_list.adap.remove(ogg_lista)                             # cancella l'oggetto dalla lista
+        pub_results.publish(matcher)                                                    # pubblish della variabile di output
+>>>>>>> Stashed changes
 
 #PUBLISHER
 pub_results = rospy.Publisher('/featureMatcher', matcher, queue_size=10)
