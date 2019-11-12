@@ -18,8 +18,8 @@ def talker():
         msg1.x_3d=4.1
         msg1.y_3d=4.2
         msg1.z_3d=4.3
-        msg1.x_2d=4.4
-        msg1.y_2d=4.5
+        msg1.x_2d=1.1
+        msg1.y_2d=1.2
         msg1.shape_tag = 'quadrato'        
         msg1.c.append(3)
         
@@ -28,8 +28,8 @@ def talker():
         msg2.x_3d=5.1
         msg2.y_3d=5.2
         msg2.z_3d=5.3
-        msg2.x_2d=5.4
-        msg2.y_2d=5.6
+        msg2.x_2d=9.1
+        msg2.y_2d=9.2
         msg2.shape_tag = 'rettangolo'
         msg2.c.append(3)
         msg2.c.append(5)

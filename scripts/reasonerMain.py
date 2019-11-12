@@ -19,7 +19,7 @@ def callback(data):
         record_line.append(data.table[i].second_percepted_object)
         record_line.append(data.table[i].correlation)
         records.append(record_line)
-    
+
     # Inizializzo l'array che conterra' tutti gli oggetti percepiti presenti sulla scena
     objects = []
 
@@ -64,7 +64,7 @@ def callback(data):
                         i -= 1
             j += 1
         i += 1
-                
+          
     # Calcolo correlazione minima
     i = 0
     while i < len(records):
@@ -88,7 +88,7 @@ def callback(data):
         i+=1
     
     # GESTIONE ECCEZIONI
-    # Eccezione 1: in una collezione è presente più di un oggetto rilevato dallo stesso modulo percettivo
+    # Eccezione 1: in una collezione e' presente piu' di un oggetto rilevato dallo stesso modulo percettivo
     i = 0
     for i in range(len(records)):
         j = 0
@@ -98,19 +98,18 @@ def callback(data):
                 intersection.append(records[i][j][0])
             else:
                 rospy.logerr("Errore: due oggetti del modulo percettivo " + records[i][j][0] + " sembrano essere correlati")
-        
-    # Eccezione 2: aggiunta degli oggetti riconosciuti in più da un solo modulo percettivo ma non correlati a nessun altro oggetto
+    
+    # Eccezione 2: aggiunta degli oggetti riconosciuti in piu' da un solo modulo percettivo ma non correlati a nessun altro oggetto
     i = 0
     for i in range(len(records)):
         for j in range(len(records[i])-1):
             if objects.__contains__(records[i][j]):
                 objects.remove(records[i][j])
-    listObject = []
     for i in range(len(objects)):
+        listObject = []
         listObject.append(objects[i])
         listObject.append(0.0)
         records.append(listObject)
-
     # Costruzione del messaggio in output
     output = outputReasoner()
     output.lines = []
