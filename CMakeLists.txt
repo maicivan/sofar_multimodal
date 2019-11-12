@@ -25,13 +25,12 @@ find_package(catkin REQUIRED COMPONENTS
     TensorOutput.msg
     commonFeature.msg
     selectorMatcher.msg
-	record.msg
-	outputReasoner.msg        
-	corr.msg
-	correlationTable.msg
-    intersect_msg.msg 
-    intersectFeatures.msg 
-    stringValue.msg       
+	  outputReasoner.msg        
+	  corr.msg
+	  correlationTable.msg      
+	  record.msg
+	  outputReasoner.msg        
+    matcherObj.msg     
   )
 
 ## Generate added messages and services with any dependencies listed here
