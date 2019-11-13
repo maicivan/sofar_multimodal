@@ -60,6 +60,8 @@ def callback(data):
 				if mod_perc_comp1.adap[0].obj[j].name == 'id':
 					for l in range(0,len(mod_perc_comp1.adap)):					
 						strings = str(id_perc1)+str(mod_perc_comp1.adap[l].obj[j].value)[2:-2]
+						print("-----------------")
+						print(strings)
 						id_tot1.append(strings)
 											
 					for k in range(0,len(mod_perc_comp2.adap)):					

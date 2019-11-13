@@ -18,7 +18,7 @@ def matcherFunction(obj_list, r_out):
             for ogg_lista in obj_list.adap:
                 for caratteristica in ogg_lista.obj:
                     if (caratteristica.name == 'id'):
-                        if (int(ogg_reas[1:]) == int(caratteristica.value[0])):
+                        if ((ogg_reas[1:]) == (caratteristica.value[0])):
                             matcher.sameObj.append(ogg_lista)                           # crea una lista di oggetti corrispondetnti
                             obj_list.adap.remove(ogg_lista)                             # cancella l'oggetto dalla lista
         pub_results.publish(matcher)                                                    # pubblish della variabile di output
