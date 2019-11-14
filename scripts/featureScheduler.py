@@ -36,9 +36,11 @@ def compare(buffer):
 						if not (buffer.common[j].adap):
 							return
 						for feature_2 in range(0, len(buffer.common[j].adap[0].obj)):
-							if(buffer.common[k].adap[oggetto].obj[feature].name ==  buffer.common[j].adap[0].obj[feature_2].name):
-								common_feature.append(feature)
-
+							try:
+								if(buffer.common[k].adap[oggetto].obj[feature].name ==  buffer.common[j].adap[0].obj[feature_2].name):
+									common_feature.append(feature)
+							except IndexError:
+								print("OutOfIndex")
 	
 					for feature in range(len(buffer.common[k].adap[oggetto].obj)-1,-1,-1):
 						if common_feature:

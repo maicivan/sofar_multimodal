@@ -60,8 +60,6 @@ def callback(data):
 				if mod_perc_comp1.adap[0].obj[j].name == 'id':
 					for l in range(0,len(mod_perc_comp1.adap)):					
 						strings = str(id_perc1)+str(mod_perc_comp1.adap[l].obj[j].value)[2:-2]
-						print("-----------------")
-						print(strings)
 						id_tot1.append(strings)
 											
 					for k in range(0,len(mod_perc_comp2.adap)):					
@@ -83,10 +81,6 @@ def callback(data):
 				if (mod_perc_comp1.adap[0].obj[j].name == 'colour_hsv'):
 					get_HSV(mod_perc_comp1,mod_perc_comp2,table,delta_hue,j)
 					
-			 #print()				
-			 #print(table)	
-			 #print(id_tot1)		 
-			 #print(id_tot2)
 			table = - table/w
 			table_corr = n.tanh(table)+1
 			unpackaging(id_tot1,id_tot2,table_corr)
@@ -106,10 +100,10 @@ def unpackaging(id_tot1,id_tot2,table_corr):
 	rate=rospy.Rate(20)
 	pub.publish(table_corr_unpack)
 	
-	print(id_tot1)		 
-	print(id_tot2)
-	print(table_corr)
-	print(table_corr_unpack)
+	# print(id_tot1)		 
+	# print(id_tot2)
+	# print(table_corr)
+	# print(table_corr_unpack)
 		
 				
 
@@ -123,7 +117,8 @@ def listener():
     rospy.spin()
 
 if __name__ == '__main__':
-    listener()
+	listener()
+
   
 
 

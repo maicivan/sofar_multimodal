@@ -39,7 +39,10 @@ def get_dist_3d(mod_perc_comp1,mod_perc_comp2,table,beta_3d,j):
 			
 			deltaX = float(feature_object_mod1 .value[0]) - float(feature_object_mod2.value[0])							
 			deltaY = float(feature_object_mod1 .value[1]) - float(feature_object_mod2.value[1])
-			deltaZ = float(feature_object_mod1 .value[2]) - float(feature_object_mod2.value[2])
+			try:
+				deltaZ = float(feature_object_mod1 .value[2]) - float(feature_object_mod2.value[2])
+			except IndexError:
+				print("OutOfIndex")
 			
 			table[l][k] = table[l][k] + beta_3d*pow((pow(deltaX,2)+ pow(deltaY,2)+pow(deltaZ,2)),0.5)
 	
