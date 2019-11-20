@@ -73,26 +73,46 @@ float32 correlation
 ### Description of the Modules
 #### PITT Perception module
 It describes all the modules within the architecture, i.e, (i) the inputs, (ii) the internal working, and (iii) the outputs.
+* __Input__: 
+* __Output__:
+* __Publisher__: [__O1__]
 
 #### Tensorflow Perception module
 It describes all the modules within the architecture, i.e, (i) the inputs, (ii) the internal working, and (iii) the outputs.
+* __Input__: 
+* __Output__:
+* __Publisher__: [__O2__]
 
 #### Adapter module
-It makes a standard message for each perception module. We provide an adapter for the Pitt module and another for the Tensorflow module. 
+It's a module between a perception module and Feature selector module and makes a standard message for each perception module.  We provide an adapter for the Pitt module and another for the Tensorflow module. 
 To add another perception module, it needs to implement a different adapter.
-* Input: all subscribers from perception modules
-* Output: an adapter.msg
+* __Input__: a type of message of a perception module
+* __Output__: an adapter.msg
+* __Publisher__: /outputAdapterPitt | /outputAdapterTensor
+
 #### Features Selector module
 It describes all the modules within the architecture, i.e, (i) the inputs, (ii) the internal working, and (iii) the outputs.
+* __Input__: an adapter.msg
+* __Output__: a selectorMatcher.msg
+* __Publisher__: /featureScheduler/pubIntersection [__F__]| /featureScheduler/pubUnion [__R__]
+
 #### Features Matcher module
 It describes all the modules within the architecture, i.e, (i) the inputs, (ii) the internal working, and (iii) the outputs.
+* __Input__: a selectorMatcher.msg | outputReasoner.msg
+* __Output__: a matcherObj.msg
+* __Publisher__: /featureMatcher/dataPub [__P__]
 
 #### Table matcher module
 It describes all the modules within the architecture, i.e, (i) the inputs, (ii) the internal working, and (iii) the outputs.
+* __Input__: 
+* __Output__:
+* __Publisher__: [__T__]
 
 #### Reasoner module
 It describes all the modules within the architecture, i.e, (i) the inputs, (ii) the internal working, and (iii) the outputs.
-
+* __Input__: 
+* __Output__:
+* __Publisher__: [__U__]
 
 ## Implementation
 
@@ -109,9 +129,8 @@ It presents the result using (images or videos) of the working system, in (real 
 The Recommendations follow naturally from the conclusions. They describe: the assumptions made while building the system (and/or) the limitations of the working system. Therefore, presenting possible ideas that could overcome the limitations or assumptions. 
 
 ## Authors
-* FirstName LastName: email@email.com
-* FirstName LastName: email@email.com
-* FirstName LastName: email@email.com
+* Filippo Lapide
+* Vittoriofranco Vagge
 
 # Useful GitHub readme syntax
 
@@ -137,11 +156,6 @@ For example: Please do a ```catkin_make```, once you have modified your code.
 
 ## To add image(s) or video(s)
 
-* To embbed an image
-
-<p align="center"> 
-<img src="https://github.com/yushakareem/test-delete/blob/master/light-bulb-2-256.gif">
-</p>
 
 * To link a [video](https://youtu.be/-yOZEiHLuVU)
 
