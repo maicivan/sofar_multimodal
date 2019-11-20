@@ -6,12 +6,12 @@ The prject proposes an implementation of architecture to fuse geometric features
 ## The System’s Architecture
 
 ### Overall Architecture
-Architecture fuse geometric features computed from N-perception modules.
-This implementation use two perception modules, point clouds (PITT) and Convolution Neural Network (CNN - TensorFlow).
-Between a Perception module and Feature selector module there is an Adapter to implement a standard message for each perception module.
+Architecture fuses geometric features computed from N-perception modules.
+This implementation uses two perception modules, point clouds (PITT) and Convolution Neural Network (CNN - TensorFlow).
+Between a Perception module and Feature selector module, there is an Adapter to implement a standard message for each perception module.
 Then, Feature Selector receives all the information acquired by the sensors and produces two outputs. An intersection of data that identifies any common features between the objects from different perception modules and an union data containing all information from the sensors.
 Correlation Table Manager takes union data and __........__
-Reasoner take in input the output of Correlation Table Manager and generate an index of correlation for objects recognized from different perception modules __..........__
+Reasoner takes in input the output of Correlation Table Manager and generates an index of correlation for objects recognized from different perception modules __..........__
 Finally the Feature Selector join the data from Reasoner and Feature Selector module by searching for objects' IDs and assorting all features coming from different perceptive modules. Then, it returns an output message for each object recognized comprehensive with all information collected by the various sensors.
 
 
