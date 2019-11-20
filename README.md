@@ -9,7 +9,7 @@ The prject proposes an implementation of architecture to fuse geometric features
 It describes what the project wants to achieve and defines the key terminologies of this project. Presents the hardware or tools used in the project.
 
 <p align="center"> 
-<img src="https://github.com/yushakareem/test-delete/blob/master/light-bulb-2-256.gif">
+<img src="https://github.com/maicivan/sofar_multimodal/blob/master/imgs/Schermata%202019-11-14%20alle%2014.55.55.png">
 </p>
 
 #### Messages
