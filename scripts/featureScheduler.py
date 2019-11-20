@@ -1,9 +1,8 @@
-"""
-@author:    Filippo Lapide
-@author:	Vittoriofranco Vagge
-"""
-
 #!/usr/bin/env python
+"""
+author:    Filippo Lapide
+author:	Vittoriofranco Vagge
+"""
 import rospy
 from std_msgs.msg import *
 from sofar_multimodal.msg import *

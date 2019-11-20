@@ -1,9 +1,9 @@
+#!/usr/bin/env python
 """
-@author:    Filippo Lapide
-@author:	Vittoriofranco Vagge
+author:    Filippo Lapide
+author:	Vittoriofranco Vagge
 """
 
-#!/usr/bin/env python
 import rospy
 from std_msgs.msg import *
 from sofar_multimodal.msg import *
@@ -53,7 +53,7 @@ if __name__ == '__main__':
 	##SUBSCRIBER
 	sub_pitt = rospy.Subscriber('reasoner_output', outputReasoner, callbackReasoner)
 	##SUBSCRIBER
-    sub_tensor = rospy.Subscriber('/featureScheduler/pubUnion', selectorMatcher, callbackSelector)
+	sub_tensor = rospy.Subscriber('/featureScheduler/pubUnion', selectorMatcher, callbackSelector)
 	##PUBLISHER
 	pub_results = rospy.Publisher('/featureMatcher/dataPub', matcherObj, queue_size=10)
 	rate = rospy.Rate(10)
