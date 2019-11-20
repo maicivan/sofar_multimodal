@@ -91,13 +91,18 @@ To add another perception module, it needs to implement a different adapter.
 * __Publisher__: /outputAdapterPitt | /outputAdapterTensor
 
 #### Features Selector module
-It describes all the modules within the architecture, i.e, (i) the inputs, (ii) the internal working, and (iii) the outputs.
+It receives all the information acquired by the sensors, storing them inside a buffer.
+t produces two outputs: the first one transmits the information saved in the buffer to the "Feature Matcher" and the other output transmits to the "Correlation Table Manager" module.
+For the second output, the module identifies any common features between the objects recognized by the sensors (for example, shape or color).
 * __Input__: an adapter.msg
 * __Output__: a selectorMatcher.msg
 * __Publisher__: /featureScheduler/pubIntersection [__F__]| /featureScheduler/pubUnion [__R__]
 
 #### Features Matcher module
-It describes all the modules within the architecture, i.e, (i) the inputs, (ii) the internal working, and (iii) the outputs.
+In this module, the data received from the Reasoner and the Feature Selector are joined.
+From the Reasoner, this module receives the objects' IDs detected by different perception modules plus the degree of correlation (a number that indicates the reliability of the analysis obtained).
+From Feature Selector, Feature Matcher receives all data of objects detected.
+The Features Matcher finds the information by searching for objects' IDs and assorting all features coming from different perceptive modules. Then, it returns an output message for each object recognized comprehensive with all information collected by the various sensors.
 * __Input__: a selectorMatcher.msg | outputReasoner.msg
 * __Output__: a matcherObj.msg
 * __Publisher__: /featureMatcher/dataPub [__P__]
