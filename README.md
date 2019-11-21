@@ -78,7 +78,7 @@ obj[] sameObj
 float32 correlation
 ```
 <p align="center"> 
-<img src="https://github.com/maicivan/sofar_multimodal/blob/master/imgs/">
+<img src="https://github.com/maicivan/sofar_multimodal/blob/master/imgs/Schermata%202019-11-14%20alle%2016.39.25.png">
 </p>
 
 ### Description of the Modules
