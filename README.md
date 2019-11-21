@@ -166,7 +166,7 @@ rostpic echo /featureMatcher/dataPub
 It presents the result using (images or videos) of the working system, in (real or simulation).
 
 <p align="center"> 
-<img src="https://github.com/maicivan/sofar_multimodal/blob/master/imgs/">
+<img src="https://github.com/maicivan/sofar_multimodal/blob/master/imgs/VirtualBox_EmaroBox_1_21_11_2019_11_53_42.png">
 </p>
 
 ## Recommendations
