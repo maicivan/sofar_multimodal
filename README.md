@@ -170,7 +170,7 @@ It presents the result using (images or videos) of the working system, in (real 
 </p>
 
 ## Recommendations
-If you want add a perception module, you will need to add an Adapter module between perception module and feature selecetor module.
+If you want add a perception module, you will need to add an Adapter module between perception module and feature selector module.
 Then, add a subscriber and its callback in featureScheduler.py following the commented example into the script.
 
 ## Authors
