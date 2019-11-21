@@ -170,8 +170,11 @@ It presents the result using (images or videos) of the working system, in (real 
 </p>
 
 ## Recommendations
-If you want add a perception module, you will need to add an Adapter module between perception module and feature selector module.
-Then, add a subscriber and its callback in featureScheduler.py following the commented example into the script.
+To add a perception module, you will need to add an Adapter module between perception module and feature selector module.
+Then, add a subscriber and its callback in featureScheduler.py by following the commented example into the script.
+
+In [docs](https://github.com/maicivan/sofar_multimodal/blob/master/docs/) directory there is the doxygen documentation in html or latex format.
+
 
 ## Authors
 * Filippo Lapide
