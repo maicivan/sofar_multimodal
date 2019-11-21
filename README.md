@@ -135,11 +135,37 @@ It describes all the modules within the architecture, i.e, (i) the inputs, (ii) 
 ### Prerequisites
 It describes all hardwares and softwares that are required for running the system.
 
+### Installation
+```
+cd catkin_ws/src/
+git clone https://github.com/maicivan/sofar_multimodal.git
+```
 ### How to run the project
-It describes step by step how to download and run the project on a new computer.
+
+```
+cd sofar_multimodal
+roscore &
+source devel/setupe.bash
+rosrun sofar_multimodal talkerPitt &
+rosrun sofar_multimodal talkerTensor &
+rosrun sofar_multimodal adapterPitt &
+rosrun sofar_multimodal adapterTensor &
+rosrun sofar_multimodal featureScheduler.py &
+rosrun sofar_multimodal tableMatcher.py &
+rosrun sofar_multimodal reasonerMain.py &
+rosrun sofar_multimodal featuresMatcher.py &
+```
+To monitor the output:
+```
+rostpic echo /featureMatcher/dataPub
+```
 
 ## Results
 It presents the result using (images or videos) of the working system, in (real or simulation).
+
+<p align="center"> 
+<img src="https://github.com/maicivan/sofar_multimodal/blob/master/imgs/">
+</p>
 
 ## Recommendations
 The Recommendations follow naturally from the conclusions. They describe: the assumptions made while building the system (and/or) the limitations of the working system. Therefore, presenting possible ideas that could overcome the limitations or assumptions. 
