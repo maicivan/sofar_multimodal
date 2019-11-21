@@ -135,7 +135,7 @@ It describes all the modules within the architecture, i.e, (i) the inputs, (ii) 
 ## Implementation
 
 ### Prerequisites
-It describes all hardwares and softwares that are required for running the system.
+On the machine must be installed RoS with rospy and python.
 
 ### Installation
 ```
