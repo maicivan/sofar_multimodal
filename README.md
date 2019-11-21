@@ -170,8 +170,21 @@ It presents the result using (images or videos) of the working system, in (real 
 </p>
 
 ## Recommendations
-The Recommendations follow naturally from the conclusions. They describe: the assumptions made while building the system (and/or) the limitations of the working system. Therefore, presenting possible ideas that could overcome the limitations or assumptions. 
+If you want add a perception module, you will need to add an Adapter module between perception module and feature selecetor module.
+Then, add a subscriber and its callback in featureScheduler.py following the commented example into the script.
 
 ## Authors
 * Filippo Lapide
+
 * Vittoriofranco Vagge
+
+* Maicol Polvere
+* Daniele Torrigino
+* Francesco Giovinazzo
+
+* Nicolò Baldassarre
+* Andrea Rusconi
+* Matteo Panzera
+
+* Francesco Bruno
+* Ariel Gjaci
