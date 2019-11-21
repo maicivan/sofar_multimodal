@@ -169,6 +169,9 @@ It presents the result using (images or videos) of the working system, in (real 
 <img src="https://github.com/maicivan/sofar_multimodal/blob/master/imgs/VirtualBox_EmaroBox_1_21_11_2019_11_53_42.png">
 </p>
 
+### Video
+[![Watch the video](https://github.com/maicivan/sofar_multimodal/blob/master/imgs/VirtualBox_EmaroBox_1_21_11_2019_11_53_42.png)](https://www.youtube.com/embed/JwPSA9yZG2A)
+
 ## Recommendations
 To add a perception module, you will need to add an Adapter module between perception module and feature selector module.
 Then, add a subscriber and its callback in featureScheduler.py by following the [commented example](https://github.com/maicivan/sofar_multimodal/blob/a56460ff915c84362d3897307453054a5fdfaa02/scripts/featureScheduler.py#L104-L105) into the script.
