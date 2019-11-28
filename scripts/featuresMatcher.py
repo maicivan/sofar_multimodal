@@ -13,7 +13,9 @@ reasoner_out = outputReasoner()
 selector_out = selectorMatcher()
 obj_list = adapter()
 obj_list.id_mod = 90 #the most frightening
+obj_out = obj()
 matcher = matcherObj()
+matcher_out = matcherObj()
 
 ##Function
 def matcherFunction(obj_list, r_out):
@@ -27,9 +29,30 @@ def matcherFunction(obj_list, r_out):
                 for caratteristica in ogg_lista.obj:
                     if (caratteristica.name == 'id'):
                         if ((ogg_reas[1:]) == (caratteristica.value[0])):
+                            ogg_lista.obj.remove(caratteristica)                        # remove ID feature
                             matcher.sameObj.append(ogg_lista)                           # make a list of matching objects
                             obj_list.adap.remove(ogg_lista)                             # delete the object from the list
-        pub_results.publish(matcher)                                                    # pubblish output
+        if(len(matcher.sameObj)>1):
+            obj_out.obj[:] = []
+            matcher_out.sameObj[:] = []
+            for oggetto_1 in matcher.sameObj:
+                if (matcher.sameObj.index(oggetto_1)+1 < len(matcher.sameObj)):
+                    for caratteristica_1 in matcher.sameObj[matcher.sameObj.index(oggetto_1)].obj:
+                        for caratteristica_2 in matcher.sameObj[matcher.sameObj.index(oggetto_1)+1].obj:
+                            if caratteristica_1.name == caratteristica_2.name:
+                                for k in range(0, len(caratteristica_1.value)):
+                                    new_value = str((float(caratteristica_1.value[k])+float(caratteristica_2.value[k]))/2)
+                                    caratteristica_2.value[k] = new_value
+                                caratteristica_1.name = "done"
+                            if caratteristica_2 not in obj_out.obj:
+                                obj_out.obj.append(caratteristica_2)
+                        if(caratteristica_1.name != "done"):
+                            obj_out.obj.append(caratteristica_1)
+            matcher_out.sameObj.append(obj_out)
+            matcher_out.correlation= matcher.correlation
+            pub_results.publish(matcher_out)                                                # publish output
+        else:
+            pub_results.publish(matcher)                                                    # publish output
 
 
 ##CALLBACK
