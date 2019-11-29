@@ -15,7 +15,7 @@ obj_list = adapter()
 obj_list.id_mod = 90 #the most frightening
 obj_out = obj()
 matcher = matcherObj()
-matcher_out = matcherObj()
+matcherOut = matcher_out()
 
 ##Function
 def matcherFunction(obj_list, r_out):
@@ -34,7 +34,6 @@ def matcherFunction(obj_list, r_out):
                             obj_list.adap.remove(ogg_lista)                             # delete the object from the list
         if(len(matcher.sameObj)>1):
             obj_out.obj[:] = []
-            matcher_out.sameObj[:] = []
             for oggetto_1 in matcher.sameObj:
                 if (matcher.sameObj.index(oggetto_1)+1 < len(matcher.sameObj)):
                     for caratteristica_1 in matcher.sameObj[matcher.sameObj.index(oggetto_1)].obj:
@@ -48,12 +47,14 @@ def matcherFunction(obj_list, r_out):
                                 obj_out.obj.append(caratteristica_2)
                         if(caratteristica_1.name != "done"):
                             obj_out.obj.append(caratteristica_1)
-            matcher_out.sameObj.append(obj_out)
-            matcher_out.correlation= matcher.correlation
-            pub_results.publish(matcher_out)                                                # publish output
+            matcherOut.obj[:] = obj_out.obj[:]
+            matcherOut.correlation = matcher.correlation
+            pub_results.publish(matcherOut)                                             # publish output
         else:
-            pub_results.publish(matcher)                                                    # publish output
-
+            if matcher.sameObj:
+                matcherOut.obj[:] = matcher.sameObj[0].obj[:]
+                matcherOut.correlation = matcher.correlation
+                pub_results.publish(matcherOut)                                         # publish output
 
 ##CALLBACK
 def callbackSelector(selectorMatcher):
@@ -78,7 +79,7 @@ if __name__ == '__main__':
 	##SUBSCRIBER
 	sub_tensor = rospy.Subscriber('/featureScheduler/pubUnion', selectorMatcher, callbackSelector)
 	##PUBLISHER
-	pub_results = rospy.Publisher('/featureMatcher/dataPub', matcherObj, queue_size=10)
+	pub_results = rospy.Publisher('/featureMatcher/dataPub', matcher_out, queue_size=10)
 	rate = rospy.Rate(10)
 	while not rospy.is_shutdown():
 
